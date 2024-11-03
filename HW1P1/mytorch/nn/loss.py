@@ -1,5 +1,5 @@
 import numpy as np
-
+from .activation import Softmax
 
 class MSELoss:
 
@@ -14,19 +14,19 @@ class MSELoss:
 
         self.A = A
         self.Y = Y
-        self.N = None  # TODO
-        self.C = None  # TODO
-        se = None  # TODO
-        sse = None  # TODO
-        mse = None  # TODO
+        self.N = A.shape[0]
+        self.C = A.shape[1]
+        se = (A - Y) ** 2  # TODO
+        sse = np.ones(self.N).T @ se @ np.ones(self.C)  # TODO
+        mse = sse / (self.N * self.C)  # TODO
 
-        return NotImplemented
+        return mse
 
     def backward(self):
 
-        dLdA = None
+        dLdA = dLdA = 2 * (self.A - self.Y) / (self.N * self.C)
 
-        return NotImplemented
+        return dLdA
 
 
 class CrossEntropyLoss:
@@ -43,21 +43,40 @@ class CrossEntropyLoss:
         """
         self.A = A
         self.Y = Y
-        N = None  # TODO
-        C = None  # TODO
+        N = A.shape[0]
+        C = A.shape[1]
 
-        Ones_C = None  # TODO
-        Ones_N = None  # TODO
+        Ones_C = np.ones((C, 1), dtype='f')
+        Ones_N = np.ones((N, 1), dtype='f')
+        
+        # # Softmax calculation
+        # exp_A = np.exp(A - np.max(A, axis=1, keepdims=True))  # For numerical stability
+        # self.softmax = exp_A / np.sum(exp_A, axis=1, keepdims=True)  # Softmax probabilities
 
-        self.softmax = None  # TODO
-        crossentropy = None  # TODO
-        sum_crossentropy = None  # TODO
+        # # Cross-entropy calculation
+        # crossentropy = -Y * np.log(self.softmax + 1e-12)  # Add small constant for stability
+        # sum_crossentropy = np.sum(crossentropy)  # Sum of cross-entropy terms
+        # L = sum_crossentropy / N  # Mean cross-entropy loss
+        
+        # self.softmax = None #TODO
+        # crossentropy = None #TODO
+        # sum_crossentropy = None #TODO
+        # L = None #TODO
+        # Softmax probabilities for stability
+        softmax = Softmax()
+        self.softmax = softmax.forward(A)
+
+        # Calculate cross-entropy
+        crossentropy = -np.sum(Y * np.log(self.softmax), axis=1)  # Shape: (N,)
+        # Sum over all samples
+        sum_crossentropy = np.sum(crossentropy)
+        # Mean cross-entropy loss
         L = sum_crossentropy / N
-
-        return NotImplemented
+        return L
 
     def backward(self):
+        dLdA = (self.softmax - self.Y) / self.A.shape[0]  # Divide by N for mean
+        # dLdA = (self.softmax - self.Y) / self.N
+        #dLdA = None #TODO
 
-        dLdA = None  # TODO
-
-        return NotImplemented
+        return dLdA
