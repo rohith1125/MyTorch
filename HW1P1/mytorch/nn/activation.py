@@ -1,3 +1,5 @@
+# Implementation by: Sai Rohith Tanuku
+# Course Assignment - INFSCI 2595
 import numpy as np
 import scipy
 

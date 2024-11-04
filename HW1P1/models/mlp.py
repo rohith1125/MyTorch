@@ -1,3 +1,5 @@
+# Implementation by: Sai Rohith Tanuku
+# Course Assignment - INFSCI 2595
 import numpy as np
 
 from mytorch.nn.linear import Linear
@@ -139,7 +141,7 @@ class MLP4:
 
                 self.A.append(A)
 
-        return self.A[-1]
+        return A
 
     def backward(self, dLdA):
         """
@@ -160,4 +162,4 @@ class MLP4:
 
                 self.dLdA = [dLdA] + self.dLdA
 
-        return self.dLdA[-1]
+        return dLdA

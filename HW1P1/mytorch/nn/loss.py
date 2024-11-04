@@ -1,3 +1,5 @@
+# Implementation by: Sai Rohith Tanuku
+# Course Assignment - INFSCI 2595
 import numpy as np
 from .activation import Softmax  # Assuming Softmax is implemented in activation.py
 

@@ -1,3 +1,5 @@
+# Implementation by: Sai Rohith Tanuku
+# Course Assignment - INFSCI 2595
 import numpy as np
 
 
@@ -15,31 +17,6 @@ class SGD:
                     for i in range(self.L)]
 
     def step(self):
-
-        # for i in range(self.L):
-
-        #     if self.mu == 0:
-
-        #         self.l[i].W = None  # TODO
-        #         self.l[i].b = None  # TODO
-
-        #     else:
-
-        #         self.v_W[i] = None  # TODO
-        #         self.v_b[i] = None  # TODO
-        #         self.l[i].W = None  # TODO
-        #         self.l[i].b = None  # TODO
-        # for i in range(self.L):
-        #     if self.mu == 0:
-        #         # Standard SGD update without momentum
-        #         self.l[i].W -= self.lr * self.l[i].dLdW  # Update weights
-        #         self.l[i].b -= self.lr * self.l[i].dLdb  # Update biases
-        #     else:
-        #         # SGD update with momentum
-        #         self.v_W[i] = self.mu * self.v_W[i] + self.lr * self.l[i].dLdW  # Update velocity for weights
-        #         self.v_b[i] = self.mu * self.v_b[i] + self.lr * self.l[i].dLdb  # Update velocity for biases
-        #         self.l[i].W -= self.v_W[i]  # Update weights with velocity
-        #         self.l[i].b -= self.v_b[i]  # Update biases with velocity
         for i in range(self.L):
             if self.mu == 0:
                 # Standard SGD update without momentum
